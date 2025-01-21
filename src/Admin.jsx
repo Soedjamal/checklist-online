@@ -38,6 +38,11 @@ const Admin = () => {
     return report;
   };
 
+  const handleCopy = (text) => {
+    navigator.clipboard.writeText(text);
+    alert("Laporan berhasil disalin ke clipboard!");
+  };
+
   const downloadJSON = () => {
     const dataStr = `data:text/json;charset=utf-8,${encodeURIComponent(
       JSON.stringify(checklists, null, 2)
@@ -58,27 +63,36 @@ const Admin = () => {
           <p>Loading data...</p>
         ) : (
           <div className="w-full max-w-4xl">
-            {checklists.map((checklist) => (
-              <div
-                key={checklist.id}
-                className="border-2 border-gray-300 rounded-lg p-4 mb-4"
-              >
-                <h2 className="text-xl font-bold mb-2">
-                  Nama: {checklist.name}
-                </h2>
-                <textarea
-                  className="w-full h-64 p-2 border border-gray-300 rounded-lg"
-                  readOnly
-                  value={generateTextReport(checklist)}
-                />
-              </div>
-            ))}
+            {checklists.map((checklist) => {
+              const reportText = generateTextReport(checklist);
+              return (
+                <div
+                  key={checklist.id}
+                  className="border-2 border-gray-300 rounded-lg p-4 mb-4"
+                >
+                  <h2 className="text-xl font-bold mb-2">
+                    Nama: {checklist.name}
+                  </h2>
+                  <textarea
+                    className="w-full h-64 p-2 border border-gray-300 rounded-lg mb-4"
+                    readOnly
+                    value={reportText}
+                  />
+                  <button
+                    onClick={() => handleCopy(reportText)}
+                    className="bg-green-500 text-white px-4 py-2 rounded-lg"
+                  >
+                    Copy
+                  </button>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
       <button
         onClick={downloadJSON}
-        className="bg-blue-500 text-white px-4 py-2"
+        className="bg-blue-500 text-white px-4 py-2 mt-4"
       >
         Unduh Data JSON
       </button>

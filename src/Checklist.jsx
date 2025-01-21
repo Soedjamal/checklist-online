@@ -6,6 +6,7 @@ const Checklist = () => {
   const [name, setName] = useState("");
   const [tasks, setTasks] = useState({});
   const [checklists, setChecklists] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const checklistCollectionRef = collection(db, "checklists");
 
@@ -114,10 +115,12 @@ const Checklist = () => {
       alert("Nama tidak boleh kosong!");
       return;
     }
+    setLoading(true);
     await addDoc(checklistCollectionRef, { name, tasks });
     setName("");
     setTasks(initializeTasks());
     alert("Data berhasil disimpan!");
+    setLoading(false);
   };
 
   return (
@@ -155,13 +158,14 @@ const Checklist = () => {
         ))}
       </div>
       <button
+        disabled={loading ? true : false}
         className="my-8 bg-slate-200 w-[300px] py-4 text-xl font-bold rounded-lg"
         onClick={handleSubmit}
       >
-        Simpan
+        {loading ? "Mengirim.." : "Kirim"}
       </button>
-      {/* <h2>Data Checklist</h2> */}
-      {/* <pre>{JSON.stringify(checklists, null, 2)}</pre> */}
+      {/* <h2>Data Checklist</h2>
+      <pre>{JSON.stringify(checklists, null, 2)}</pre> */}
     </div>
   );
 };
