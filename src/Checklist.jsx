@@ -137,11 +137,11 @@ const Checklist = () => {
   return (
     <div className="flex items-center justify-center flex-col mt-10 w-full ">
       <h1 className="text-xl ">Checklist Tugas ✔</h1>
-      <div className="flex w-full justify-center my-6">
-        <label className="flex gap-2 text-xlw-[300px]  justify-center font-bold">
+      <div className="flex w-full justify-center my-6 ">
+        <label className="flex gap-2 text-xl justify-center font-bold ">
           Nama:
           <input
-            className="outline-none text-slate-500"
+            className="outline-none text-slate-500 w-[200px]"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
