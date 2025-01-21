@@ -124,28 +124,30 @@ const Checklist = () => {
   };
 
   return (
-    <div className="flex items-center flex-col">
+    <div className="flex items-center justify-center flex-col mt-10">
       <h1 className="text-xl ">Checklist Tugas ✔</h1>
-      <label className="text-xl my-4">
+      <label className="text-xl my-4 pl-16 font-bold  ">
         Nama:
         <input
+          className="pl-2 outline-none text-slate-500"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Masukkan nama"
+          placeholder="Nama lengkap"
         />
       </label>
       <div className="flex flex-col gap-10">
         {Object.entries(tasks).map(([category, taskList]) => (
           <div
-            className="flex flex-col border-2 border-black p-5 w-[300px] rounded-lg"
+            className="flex flex-col border-2 border-black p-5 odd:bg-blue-200 even:bg-green-200 w-[300px] rounded-lg"
             key={category}
           >
-            <h3 className="text-xl">{category}</h3>
+            <h3 className="text-xl font-bold mb-2">{category}</h3>
             {Object.keys(taskList).map((task) => (
-              <div key={task} className="flex ">
-                <label className="flex">
+              <div key={task} className="flex m-1">
+                <label className="flex ">
                   <input
+                    className="mr-2 "
                     type="checkbox"
                     checked={tasks[category][task]}
                     onChange={() => handleTaskChange(category, task)}
@@ -159,7 +161,7 @@ const Checklist = () => {
       </div>
       <button
         disabled={loading ? true : false}
-        className="my-8 bg-slate-200 w-[300px] py-4 text-xl font-bold rounded-lg"
+        className="active:bg-slate-300 shadow-xl my-8 bg-slate-400 w-[300px] py-4 text-xl font-bold rounded-lg"
         onClick={handleSubmit}
       >
         {loading ? "Mengirim.." : "Kirim"}

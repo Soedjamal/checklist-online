@@ -20,21 +20,47 @@ const Admin = () => {
     fetchChecklists();
   }, []);
 
+  const predefinedCategories = [
+    "Story About Me",
+    "Catwalks",
+    "Butterfly Life Cycle",
+    "Animal Kingdom",
+    "Indonesian Map",
+    "Clock and Time",
+    "Virtual/Birthday Card",
+    "Human Anatomy",
+    "Planet Rotation and Evolutions",
+    "Shape Variations",
+    "Day and Night",
+    "Animal Kingdom 2",
+    "Life Cycle of Jelly Fish",
+    "Underwater Animals - Sharkgame",
+  ];
+
+  const predefinedTasks = ["Project Mandiri", "Project Modul", "PPT/Modul"];
+
   const generateTextReport = (checklist) => {
     if (!checklist || !checklist.tasks) {
       return "Data tugas tidak tersedia.\n\n";
     }
 
-    let report = `Checklist Tugas\n\nNama: ${
+    let report = `Checklist Tugas\n\nNama : ${
       checklist.name || "Tidak ada nama"
     }\n\n`;
-    for (const [category, tasks] of Object.entries(checklist.tasks)) {
+
+    for (const category of predefinedCategories) {
       report += `${category}\n`;
-      for (const [task, isCompleted] of Object.entries(tasks || {})) {
-        report += `${task} ${isCompleted ? "✅" : "❌"}\n`;
+
+      const tasks = checklist.tasks[category] || {};
+      for (const task of predefinedTasks) {
+        const isCompleted = tasks[task] || false;
+        report += `${predefinedTasks.indexOf(task) + 1}. ${task} ${
+          isCompleted ? "✅" : "❌"
+        }\n`;
       }
       report += `\n`;
     }
+
     return report;
   };
 
