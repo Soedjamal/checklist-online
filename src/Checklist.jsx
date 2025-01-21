@@ -137,16 +137,18 @@ const Checklist = () => {
   return (
     <div className="flex items-center justify-center flex-col mt-10 w-full ">
       <h1 className="text-xl ">Checklist Tugas ✔</h1>
-      <label className="flex gap-2 text-xl my-4 justify-center pl-14 font-bold ">
-        Nama:
-        <input
-          className="outline-none text-slate-500"
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Nama lengkap"
-        />
-      </label>
+      <div className="flex w-full justify-center my-6">
+        <label className="flex gap-2 text-xlw-[300px]  justify-center font-bold">
+          Nama:
+          <input
+            className="outline-none text-slate-500"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Nama lengkap"
+          />
+        </label>
+      </div>
       <div className="flex flex-col gap-10">
         {Object.entries(tasks).map(([category, taskList]) => (
           <div
