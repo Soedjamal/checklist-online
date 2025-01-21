@@ -141,7 +141,7 @@ const Checklist = () => {
         <label className="flex gap-2 text-xl justify-center font-bold ">
           Nama:
           <input
-            className="outline-none text-slate-500 w-[200px]"
+            className="outline-none text-slate-500 w-[200px] bg-transparent"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
