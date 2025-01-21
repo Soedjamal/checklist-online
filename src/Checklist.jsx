@@ -7,10 +7,15 @@ const Checklist = () => {
   const [tasks, setTasks] = useState({});
   const [checklists, setChecklists] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState({
+    status: false,
+    msg: "",
+  });
 
   const checklistCollectionRef = collection(db, "checklists");
 
   useEffect(() => {
+    console.log(message);
     const fetchChecklists = async () => {
       const data = await getDocs(checklistCollectionRef);
       setChecklists(
@@ -112,21 +117,27 @@ const Checklist = () => {
 
   const handleSubmit = async () => {
     if (name.trim() === "") {
-      alert("Nama tidak boleh kosong!");
+      setMessage({
+        status: false,
+        msg: "input wajib diisi",
+      });
       return;
     }
     setLoading(true);
     await addDoc(checklistCollectionRef, { name, tasks });
     setName("");
     setTasks(initializeTasks());
-    alert("Data berhasil disimpan!");
+    setMessage({
+      status: true,
+      msg: "berhasil input data",
+    });
     setLoading(false);
   };
 
   return (
-    <div className="flex items-center justify-center flex-col mt-10">
+    <div className="flex items-center justify-center flex-col mt-10 w-full ">
       <h1 className="text-xl ">Checklist Tugas ✔</h1>
-      <label className="flex gap-2 text-xl my-4 w-[300px] font-bold  ">
+      <label className="flex gap-2 text-xl my-4 justify-center pl-14 font-bold ">
         Nama:
         <input
           className="outline-none text-slate-500"
@@ -139,7 +150,7 @@ const Checklist = () => {
       <div className="flex flex-col gap-10">
         {Object.entries(tasks).map(([category, taskList]) => (
           <div
-            className="flex flex-col border-2 border-black p-5 odd:bg-blue-200 even:bg-green-200 w-[300px] rounded-lg"
+            className="flex flex-col border-2 border-black p-5 odd:bg-blue-100 even:bg-green-100 w-[300px] rounded-lg"
             key={category}
           >
             <h3 className="text-xl font-bold mb-2">{category}</h3>
@@ -159,9 +170,15 @@ const Checklist = () => {
           </div>
         ))}
       </div>
+
+      {message.status ? (
+        <p className="text-green-500 mt-8 mb-2 text-xl">{message.msg}</p>
+      ) : (
+        <p className="text-red-500 mt-8 mb-2 text-xl">{message.msg}</p>
+      )}
       <button
         disabled={loading ? true : false}
-        className="active:bg-slate-300 shadow-xl my-8 bg-slate-400 w-[300px] py-4 text-xl font-bold rounded-lg"
+        className="active:bg-slate-300 shadow-xl mb-8 bg-slate-400 w-[300px] py-4 text-xl font-bold rounded-lg"
         onClick={handleSubmit}
       >
         {loading ? "Mengirim.." : "Kirim"}
